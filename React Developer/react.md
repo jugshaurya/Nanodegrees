@@ -4,7 +4,7 @@
 - Composition is built from simple functions.
 - Composition occurs when simple functions are combined together to create more complex functions. Think of each function as a single building block that does one thing (DOT). When you combine these simple functions together to form a more complex function, this is composition.
 
-![](./a.png)
+![](./images/a.png)
 
 #### React & Composition
 
@@ -133,7 +133,7 @@ yarn add prop-types
 - conditionally disable/enable buttons
 - enforce input formats
 
-![](./b.png)
+![](./images/b.png)
 
 - In our ListContacts component, not only does the component render a form, but it also controls what happens in that form based on user input. In this case, event handlers update the component's state with the user's search query. And as we've learned: any changes to React state will cause a re-render on the page, effectively displaying our live search results.
 - **Putting it All Into Perspective**
@@ -142,7 +142,7 @@ yarn add prop-types
 - We covered a lot in this lesson, and you've made great progress - great work!
 - render() is only used for displaying content, we put the code that should handle things like Ajax requests in what React calls lifecycle events.
 
-![](./c.png)
+![](./images/c.png)
 
 ### Lifecycle Events
 
