@@ -31,20 +31,20 @@ npm install --save react-router-dom
 
 -Here is the code straight from the React Router repository.
 
-```
+```js
 class BrowserRouter extends React.Component {
   static propTypes = {
     basename: PropTypes.string,
     forceRefresh: PropTypes.bool,
     getUserConfirmation: PropTypes.func,
     keyLength: PropTypes.number,
-    children: PropTypes.node
-  }
+    children: PropTypes.node,
+  };
 
-  history = createHistory(this.props)
+  history = createHistory(this.props);
 
   render() {
-    return <Router history={this.history} children={this.props.children} />
+    return <Router history={this.history} children={this.props.children} />;
   }
 }
 ```
@@ -55,20 +55,22 @@ So in a nutshell, when you use BrowserRouter, you're creating a history object w
 
 - Link is a straightforward way to provide declarative, accessible navigation around your application. By passing a to property to the Link component, you tell your app which path to route to.
 
-```
+```js
 <Link to="/about">About</Link>
 ```
 
 If you're experienced with routing on the web, you'll know that sometimes our links need to be a little more complex than just a string. For example, you can pass along query parameters or link to specific parts of a page. What if you wanted to pass state to the new route? To account for these scenarios, instead of passing a string to Links to prop, you can pass it an object like this,
 
-```
-<Link to={{
- pathname: '/courses',
- search: '?sort=name',
- hash: '#the-hash',
- state: { fromDashboard: true }
-}}>
- Courses
+```js
+<Link
+  to={{
+    pathname: "/courses",
+    search: "?sort=name",
+    hash: "#the-hash",
+    state: { fromDashboard: true },
+  }}
+>
+  Courses
 </Link>
 ```
 

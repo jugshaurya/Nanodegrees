@@ -12,7 +12,7 @@ With a change like this, if the data needs to be modified at all, then all of th
 State Tree
 One of the key points of Redux is that all of the data is stored in a single object called the state tree. But what does a state tree actually look like? Here's an example:
 
-```
+```js
 {
   recipes: [
     { … },
@@ -49,7 +49,7 @@ updating the state - Dispatcher(dispatch(action)), Actions, Action Creator and R
 Then we combine the three items above and the state tree object itself into one unit which we called the store.
 ![](f.png)
 
-```
+```js
 function createStore () {
   // The store should have four parts
   // 1. The state
@@ -94,24 +94,30 @@ store.subscribe(()=>{
 
 Let's take another look at an Action:
 
+```js
 {
-type: "ADD_PRODUCT_TO_CART"
+  type: "ADD_PRODUCT_TO_CART";
 }
+```
+
 As you can see, an Action is clearly just a plain JavaScript object. What makes this plain JavaScript object special in Redux, is that every Action must have a type property. The purpose of the type property is to let our app (Redux) know exactly what event just took place. This Action tells us that a product was added to the cart. That's incredibly descriptive and quite helpful, isn't it?
 
 Now, since an Action is just a regular object, we can include extra data about the event that took place:
 
+```js
 {
-type: "ADD_PRODUCT_TO_CART",
-productId: 17
+  type: "ADD_PRODUCT_TO_CART",
+  productId: 17
 }
+```
+
 In this Action, we're including the productId field. Now we know exactly which product was added to the store!
 Action Creators are functions that create/return action objects. For example:
 
-```
-const addItem = item => ({
+```js
+const addItem = (item) => ({
   type: ADD_ITEM,
-  item
+  item,
 });
 ```
 
@@ -134,46 +140,46 @@ Do not produce side effects, such as API requests and I/O operations
 
 - These pure functions that takein the state and action are known as Reducers.
 
-```
+```js
 // Library Code
-function createStore (reducer) {
+function createStore(reducer) {
   // The store should have four parts
   // 1. The state
   // 2. Get the state.
   // 3. Listen to changes on the state.
   // 4. Update the state
 
-  let state
-  let listeners = []
+  let state;
+  let listeners = [];
 
-  const getState = () => state
+  const getState = () => state;
 
   const subscribe = (listener) => {
-    listeners.push(listener)
+    listeners.push(listener);
     return () => {
-      listeners = listeners.filter((l) => l !== listener)
-    }
-  }
+      listeners = listeners.filter((l) => l !== listener);
+    };
+  };
 
   const dispatch = (action) => {
-    state = reducer(state, action)
-    listeners.forEach((listener) => listener())
-  }
+    state = reducer(state, action);
+    listeners.forEach((listener) => listener());
+  };
 
   return {
     getState,
     subscribe,
     dispatch,
-  }
+  };
 }
 
 // App Code
-function todos (state = [], action) {
-  if (action.type === 'ADD_TODO') {
-    return state.concat([action.todo])
+function todos(state = [], action) {
+  if (action.type === "ADD_TODO") {
+    return state.concat([action.todo]);
   }
 
-  return state
+  return state;
 }
 ```
 
@@ -187,48 +193,49 @@ the store object has three methods on it:
 .dispatch() - used to make changes to the store's state
 the store object's methods have access to the state of the store via closure
 
-```
+```js
 store.subscribe(() => {
-  console.log('The new state is: ', store.getState())
-})
+  console.log("The new state is: ", store.getState());
+});
 
 store.dispatch({
-  type: 'ADD_TODO',
+  type: "ADD_TODO",
   todo: {
     id: 0,
-    name: 'Learn Redux',
-    complete: false
-  }
-})
-
+    name: "Learn Redux",
+    complete: false,
+  },
+});
 ```
 
-```
-function todos (state = [], action) {
-  switch(action.type) {
-    case 'ADD_TODO' :
-      return state.concat([action.todo])
-    case 'REMOVE_TODO' :
-      return state.filter((todo) => todo.id !== action.id)
-    case 'TOGGLE_TODO' :
-      return state.map((todo) => todo.id !== action.id ? todo :
-        Object.assign({}, todo, { complete: !todo.complete }))
-    default :
-      return state
+```js
+function todos(state = [], action) {
+  switch (action.type) {
+    case "ADD_TODO":
+      return state.concat([action.todo]);
+    case "REMOVE_TODO":
+      return state.filter((todo) => todo.id !== action.id);
+    case "TOGGLE_TODO":
+      return state.map((todo) =>
+        todo.id !== action.id
+          ? todo
+          : Object.assign({}, todo, { complete: !todo.complete })
+      );
+    default:
+      return state;
   }
 }
 
-function goals (state = [], action) {
-  switch(action.type) {
-    case 'ADD_GOAL' :
-      return state.concat([action.goal])
-    case 'REMOVE_GOAL' :
-      return state.filter((goal) => goal.id !== action.id)
-    default :
-      return state
+function goals(state = [], action) {
+  switch (action.type) {
+    case "ADD_GOAL":
+      return state.concat([action.goal]);
+    case "REMOVE_GOAL":
+      return state.filter((goal) => goal.id !== action.id);
+    default:
+      return state;
   }
 }
-
 ```
 
 kind of pointed it out at the end of the previous screencast, but we now have two reducer functions:
@@ -246,14 +253,13 @@ const store = createStore(todos, goals);
 
 <!--  so we combine these reducers into a large reducer know as root Reducer -->
 
-```
-function rootReducer (state = {}, action) {
+```js
+function rootReducer(state = {}, action) {
   return {
     todos: todos(state.todos, action),
     goals: goals(state.goals, action),
-  }
+  };
 }
-
 ```
 
 - Reducers must be pure
@@ -261,7 +267,5 @@ function rootReducer (state = {}, action) {
 - createStore() takes only one reducer argument
 - Reducers are typically named after the slices of state they manage
 
-````
-Prefer constants rather than strings as the values of type properties.
-Both work -- but when using constants, the console will throw an error rather than fail silently should there be any misspellings (e.g. LOAD_PROFIEL vs. LOAD_PROFILE)```
-````
+- Prefer constants rather than strings as the values of type properties.
+  Both work -- but when using constants, the console will throw an error rather than fail silently should there be any misspellings (e.g. LOAD_PROFIEL vs. LOAD_PROFILE)

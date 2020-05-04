@@ -1,3 +1,7 @@
+## React Nanodegree
+
+![](./images/ReactNano.png)
+
 ### Composition is:
 
 - to combine simple functions to build more complicated ones.
@@ -10,10 +14,10 @@
 
 React makes use of the power of composition, heavily! React builds up pieces of a UI using components. Let's take a look at some pseudo code for an example. Here are three different components:
 
-```
+```html
 <Page>
- <Article />
- <Sidebar />
+  <article />
+  <Sidebar />
 </Page>
 ```
 
@@ -54,10 +58,10 @@ If your component does not keep track of internal state (i.e., all it really has
 - Having state outside the constructor() means it is a class field, which is a proposal for a new change to the language. It currently isn't supported by JavaScript, but thanks to Babel's fantastic powers of transpiling, we can use it!
 - When defining a component's initial state, avoid initializing that state with props. This is an error-prone anti-pattern, since state will only be initialized with props when the component is first created.
 
-```
+```js
 this.state = {
-user: props.user
-}
+  user: props.user,
+};
 ```
 
 - In the above example, if props are ever updated, the current state will not change unless the component is "refreshed." Using props to produce a component's initial state also leads to duplication of data, deviating from a dependable "source of truth."
@@ -71,31 +75,32 @@ user: props.user
 
 - The first is to merge state updates. Consider a snippet of the following component:
 
-```
+```js
 class Email extends React.Component {
-state = {
-subject: '',
-message: ''
-}
-// ...
+  state = {
+  subject: '',
+  message: ''
+  }
+  // ...
 });
+
 ```
 
 Though the initial state of this component contains two properties (subject and message), they can be updated independently. For example:
 
-```
+```js
 this.setState({
-subject: 'Hello! This is a new subject'
-})
+  subject: "Hello! This is a new subject",
+});
 ```
 
 - This way, we can leave this.state.message as-is, but replace this.state.subject with a new value.
 - The second way we can use setState() is by passing in a function rather than an object. For example:
 
-```
+```js
 this.setState((prevState) => ({
-count: prevState.count + 1
-}))
+  count: prevState.count + 1,
+}));
 ```
 
 - Here, the function passed in takes a single prevState argument. When a component's new state depends on the previous state (i.e., we are incrementing count in the previous state by 1), we want to use the functional setState().
@@ -114,13 +119,13 @@ for all components, its UI = f(state).
   To use PropTypes in our app, we need to install prop-types:
 
 ```
-npm install --save prop-types
+$ npm install --save prop-types
 ```
 
 Alternatively, if you have been using yarn to manage packages, feel free to use it as well to install:
 
 ```
-yarn add prop-types
+$ yarn add prop-types
 ```
 
 ### Controlled Components Recap
@@ -178,11 +183,11 @@ They will run at different points, but we can break them down into three distinc
 
 The following lifecycle events will be called in order when a component is being added to the DOM:
 
-```
-constructor()
-getDerivedStateFromProps()
-render()
-componentDidMount()
+```js
+constructor();
+getDerivedStateFromProps();
+render();
+componentDidMount();
 ```
 
 ⚠️componentWillMount() has been deprecated. ⚠️
@@ -192,7 +197,7 @@ As of React 16.3, componentWillMount() has been replaced with UNSAFE_componentWi
 
 The following lifecycle events will be called in order when a component is re-rendered to the DOM:
 
-```
+```js
 getDerivedStateFromProps()
 shouldComponentUpdate()
 render()
@@ -208,6 +213,6 @@ As of React 16.3, they have been replaced with UNSAFE_componentWillUpdate() and 
 
 This lifecycle event is called when a component is being removed from the DOM:
 
-```
-componentWillUnmount()
+```js
+componentWillUnmount();
 ```

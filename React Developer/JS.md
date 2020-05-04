@@ -9,15 +9,15 @@ You’ve probably written code where an object is being initialized using the sa
 
 But just in case you haven’t, here’s an example.
 
-```
-let type = 'quartz';
-let color = 'rose';
+```js
+let type = "quartz";
+let color = "rose";
 let carat = 21.29;
 
 const gemstone = {
   type: type,
   color: color,
-  carat: carat
+  carat: carat,
 };
 
 console.log(gemstone);
@@ -34,20 +34,19 @@ The good news is that you can remove those duplicate variables names from object
 - rest Operator, fill array with values, earlier argument was a keyword in functions which is an array of all the passed arguments.
   Earlier:
 
-```
+```js
 function sum() {
   let total = 0;
-  for(const argument of arguments) {
+  for (const argument of arguments) {
     total += argument;
   }
   return total;
 }
-
 ```
 
 Now:
 
-````
+````js
 function sum(...nums) {
   let total = 0;
   for(const num of nums) {

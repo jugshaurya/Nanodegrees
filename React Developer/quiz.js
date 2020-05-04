@@ -46,7 +46,7 @@ console.log(albumSalesStrings);
  *   - do not alter any of the musicData content
  */
 
-const musicData = [
+const musicData2 = [
   { artist: "Adele", name: "25", sales: 1731000 },
   { artist: "Drake", name: "Views", sales: 1608000 },
   { artist: "Beyonce", name: "Lemonade", sales: 1554000 },
@@ -63,11 +63,11 @@ const musicData = [
   { artist: "Justin Bieber", name: "Purpose", sales: 554000 },
 ];
 
-const results = musicData.filter(
+const results2 = musicData2.filter(
   (music) => music.name.length >= 10 && music.name.length <= 25
 );
 
-console.log(results);
+console.log(results2);
 
 /* Combining .filter() and .map()
  *
@@ -84,7 +84,7 @@ console.log(results);
  *   - do not alter any of the musicData content
  */
 
-const musicData = [
+const musicData3 = [
   { artist: "Adele", name: "25", sales: 1731000 },
   { artist: "Drake", name: "Views", sales: 1608000 },
   { artist: "Beyonce", name: "Lemonade", sales: 1554000 },
@@ -101,7 +101,7 @@ const musicData = [
   { artist: "Justin Bieber", name: "Purpose", sales: 554000 },
 ];
 
-const popular = musicData
+const popular = musicData3
   .filter((music) => music.sales > 1000000)
   .map((music) => `${music.artist} is a great performer`);
 
