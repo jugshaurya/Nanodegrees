@@ -1,3 +1,5 @@
+![](./images/q.png)
+
 ### Syntax
 
 - Let vs const
@@ -256,11 +258,12 @@ Both this code and the class-style code above achieve the same functionality.
 
 ## Built-ins
 
-- Symbols
-- Interable and Interator
-- Sets
-- Maps
-- Promises
+- Symbols `Symbols("something")`
+- Interable and Interator `array[Symbol.iterator]()` and `arrayIterator.next()`
+- Sets `new Set(array)`
+- Maps `new Map(object)`
+- Promises `new Promise((resolve, reject) => {})`
+- Generator
 
 ## Symbols
 
@@ -436,3 +439,214 @@ Map {}
 > > TIP: If you .set() a key-value pair to a Map that already uses the same key, you won’t receive an error, but the key-value pair will overwrite what currently exists in the Map. Also, if you try to .delete() a key-value that is not in a Map, you won’t receive an error, and the Map will remain unchanged.
 
 > > The .delete() method returns true if a key-value pair is successfully deleted from the Map object, and false if unsuccessful. The return value of .set() is the Map object itself if successful.
+
+## Promises
+
+A Promise constructor takes a function that will run and then, after some amount of time, will either complete successfully (using the resolve method) or unsuccessfully (using the reject method). When the outcome has been finalized (the request has either completed successfully or unsuccessfully), the promise is now fulfilled and will notify us so we can decide what to do with the response.
+
+##### Promises Return Immediately
+
+The first thing to understand is that a Promise will immediately return an object.
+
+```js
+const myPromiseObj = new Promise((resolve, reject) => {
+  // sundae creation code
+});
+```
+
+That object has a .then() method on it that we can use to have it notify us if the request we made in the promise was either successful or failed. The .then() method takes two functions:
+
+- the function to run if the request completed successfully
+- the function to run if the request failed to complete
+
+```js
+mySundae.then(
+  (sundae) => {
+    console.log(`Time to eat my delicious ${sundae}`);
+  },
+  (msg) => {
+    console.log(msg);
+    self.goCry(); // not a real method
+  }
+);
+```
+
+As you can see, the first function that's passed to .then() will be called and passed the data that the Promise's resolve function used. In this case, the function would receive the sundae object. The second function will be called and passed the data that the Promise's reject function was called with. In this case, the function receives the error message "Sorry, we're out of that flavor :-(" that the reject function was called with in the Promise code above.
+
+## Generator
+
+- Whenever a function is invoked, the JavaScript engine starts at the top of the function and runs every line of code until it gets to the bottom. There's no way to stop the execution of the function in the middle and pick up again at some later point. This "run-to-completion" is the way it's always been:
+
+- But what if you want to print out the first 3 employee names then stop for a bit, then, at some later point, you want to continue where you left off and print out more employee names. With a regular function, you can't do this since there's no way to "pause" a function in the middle of its execution.
+
+#### Pausable Functions
+
+If we _do_ want to be able to pause a function mid-execution, then we'll need a new type of function available to us in ES6 - **generator functions**! Let's look at one:
+
+```js
+function* getEmployee() {
+  console.log("the function has started");
+
+  const names = [
+    "Amanda",
+    "Diego",
+    "Farrin",
+    "James",
+    "Kagure",
+    "Kavita",
+    "Orit",
+    "Richard",
+  ];
+
+  for (const name of names) {
+    console.log(name);
+  }
+
+  console.log("the function has ended");
+}
+```
+
+- Notice the asterisk (i.e. \*) right after the function keyword? That asterisk indicates that this function is actually a generator!
+
+- Now check out what happens when we try running this function:
+
+```js
+getEmployee();
+// this is the response I get in Chrome:
+getEmployee {[[GeneratorStatus]]: "suspended", [[GeneratorReceiver]]: Window}
+```
+
+**The asterisk of the generator can actually be placed anywhere between the function keyword and the function's name.**
+When a generator is invoked, it doesn't actually run any of the code inside the function. Instead, it creates and returns an iterator. This iterator can then be used to execute the actual generator's inner code.
+
+```js
+const generatorIterator = getEmployee();
+generatorIterator.next();
+```
+
+**Produces the code we expect:**
+
+```js
+the function has started
+Amanda
+Diego
+Farrin
+James
+Kagure
+Kavita
+Orit
+Richard
+the function has ended
+```
+
+Now if you tried the code out for yourself, the first time the iterator's `.next()` method was called it ran all of the code inside the generator. Did you notice anything? The code never paused! So how do we get this magical, pausing functionality?
+
+##### yield Keyword
+
+- It can only be used inside generator functions. yield is what causes the generator to pause.
+
+```js
+function* getEmployee() {
+  console.log("the function has started");
+
+  const names = [
+    "Amanda",
+    "Diego",
+    "Farrin",
+    "James",
+    "Kagure",
+    "Kavita",
+    "Orit",
+    "Richard",
+  ];
+
+  for (const name of names) {
+    console.log(name);
+    yield;
+  }
+
+  console.log("the function has ended");
+}
+```
+
+- yield is used as a return but it saves where did it left off earlier.
+
+```js
+function* getEmployee() {
+  console.log("the function has started");
+
+  const names = [
+    "Amanda",
+    "Diego",
+    "Farrin",
+    "James",
+    "Kagure",
+    "Kavita",
+    "Orit",
+    "Richard",
+  ];
+
+  for (const name of names) {
+    yield name;
+  }
+
+  console.log("the function has ended");
+}
+```
+
+Notice that now instead of console.log(name); that it's been switched to yield name;. With this change, when the generator is run, it will "yield" the name back out to the function and then pause its execution. Let's see this in action:
+
+```js
+const generatorIterator = getEmployee();
+let result = generatorIterator.next();
+result.value; // is "Amanda"
+
+generatorIterator.next().value; // is "Diego"
+generatorIterator.next().value; // is "Farrin"
+```
+
+We can also send data back into the generator, too. We do this using the .next() method:
+
+```js
+function* displayResponse() {
+  const response = yield;
+  console.log(`Your response is "${response}"!`);
+}
+
+const iterator = displayResponse();
+
+iterator.next(); // starts running the generator function
+iterator.next("Hello Udacity Student"); // send data into the generator
+// the line above logs to the console: Your response is "Hello Udacity Student"!
+```
+
+Calling .next() with data (i.e. .next('Richard')) will send data into the generator function where it last left off. It will "replace" the yield keyword with the data that you provided.
+
+## Professional Developer-fu
+
+The code we've been looking at in this course is not supported by older browsers. Older browsers that were developed prior to the release of ES6 were developed to support the version of JavaScript at the time (which was ES5.1). If you try running any ES6 code in an older browser, it won't work.
+
+##### How Can You Know What Features Browsers Support?
+
+With new language specifications coming out every year and with browsers updating every other month, it can be quite challenging to know what browser supports which language features. Each browser maker (except for Safari) has a website that tracks its development status.
+
+![](./images/r.png)
+
+- A polyfill, or polyfiller, is a piece of code (or plugin) that provides the technology that you, the developer, expect the browser to provide natively.
+
+The code below is a polyfill for the new ES6 String method, startsWith():
+
+```js
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function (searchString, position) {
+    position = position || 0;
+    return this.substr(position, searchString.length) === searchString;
+  };
+}
+As you can see, a polyfill is just regular JavaScript.
+
+```
+
+a polyfill is used to patch missing functionality. If the browser supports ES6 and has the native startsWith method, then there's no reason to polyfill it. If this check didn't exist, then this polyfill would overwrite the native implementation.
+
+- Use Babel to transpile ES6 code to ES5 , using babel-cli and babel-es5-presets

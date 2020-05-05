@@ -269,3 +269,37 @@ function rootReducer(state = {}, action) {
 
 - Prefer constants rather than strings as the values of type properties.
   Both work -- but when using constants, the console will throw an error rather than fail silently should there be any misspellings (e.g. LOAD_PROFIEL vs. LOAD_PROFILE)
+
+## Middleware
+
+You’ve learned how Redux makes state management more predictable: in order to change the store’s state, an action describing that change must be dispatched to the reducer. In turn, the reducer produces the new state. This new state replaces the previous state in the store. So the next time store.getState() is called, the new, most up-to-date state is returned.
+
+Between the dispatching of an action and the reducer running, we can introduce code called middleware to intercept the action before the reducer is invoked. The Redux docs describe middleware as:
+
+> > …a third-party extension point between dispatching an action, and the moment it reaches the reducer.
+
+What's great about middleware is that once it receives the action, it can carry out a number of operations, including:
+
+- producing a side effect (e.g., logging information about the store)
+- processing the action itself (e.g., making an asynchronous HTTP request)
+- redirecting the action (e.g., to another piece of middleware)
+- dispatching supplementary actions
+- or even some combination of the above! Middleware can do any of these before passing the action along to the reducer.
+
+> > Middleware is the suggested way to extend Redux with custom functionality.
+
+## Redux in Apps
+
+![](./images/s.png)
+
+## Async Redux and Reduc Thunk
+
+- If a web application requires interaction with a server, applying middleware such as thunk helps solve the issue of asynchronous data flow. Thunk middleware allows us to write action creators that return functions rather than objects.
+
+- By calling our API in an action creator, we make the action creator responsible for fetching the data it needs to create the action. Since we move the data-fetching code to action creators, we build a cleaner separation between our UI logic and our data-fetching logic. As a result, thunks can then be used to delay an action dispatch, or to dispatch only if a certain condition is met (e.g., a request is resolved).
+
+## Optimistic Updates
+
+- When dealing with asynchronous requests, there will always be some delay involved. If not taken into consideration, this could cause some weird UI issues. For example, let’s say when a user wants to delete a todo item, that whole process from when the user clicks“delete” to when that item is removed from the database takes two seconds. If you designed the UI to wait for the confirmation from the server to remove the item from the list on the client, your user would click “delete” and then would have to wait for two seconds to see that update in the UI. That’s not the best experience.
+
+- Instead what you can do is a technique called optimistic updates. Instead of waiting for confirmation from the server, just instantly remove the user from the UI when the user clicks “delete”, then, if the server responds back with an error that the user wasn’t actually deleted, you can add the information back in. This way your user gets that instant feedback from the UI, but, under the hood, the request is still asynchronous.
