@@ -9,3 +9,16 @@ MyReads -book tracking APp
 - react-dom
 - react-router-dom
 - sort-by
+
+## planning
+
+- AIM: create a bookshelf app
+- FUnctions:
+
+  - select and categorize books
+    - you have read,
+    - are currently reading,
+    - or want to read.
+
+- Requirement
+- prop-types@15.6.2
