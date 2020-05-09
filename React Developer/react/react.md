@@ -1,14 +1,18 @@
 ## React Nanodegree
 
-![](./images/ReactNano.png)
+![](../images/ReactNano.png)
 
 ### Composition is:
+
+- Function composition is a mathematical concept that allows you to combine two or more functions into a new function.(_fog(x) and gof(x)_)
 
 - to combine simple functions to build more complicated ones.
 - Composition is built from simple functions.
 - Composition occurs when simple functions are combined together to create more complex functions. Think of each function as a single building block that does one thing (DOT). When you combine these simple functions together to form a more complex function, this is composition.
 
-![](./images/a.png)
+## Why React ?
+
+![](../images/a.png)
 
 #### React & Composition
 
@@ -22,8 +26,9 @@ React makes use of the power of composition, heavily! React builds up pieces of 
 ```
 
 - When JavaScript code is written imperatively, we tell JavaScript exactly what to do and how to do it.
-- React is Declarative
-  -Imperative code instructs JavaScript on how it should perform each step. With declarative code, we tell JavaScript what we want to be done, and let JavaScript take care of performing the steps.
+- **React is Declarative**
+
+  - Imperative code instructs JavaScript on how it should perform each step. With declarative code, we tell JavaScript what we want to be done, and let JavaScript take care of performing the steps.
 
 - Components represent the modularity and reusability of React.
 - These component classes should follow the single responsibility principle and just "do one thing"
@@ -40,8 +45,8 @@ React makes use of the power of composition, heavily! React builds up pieces of 
 
 - Facebook's create-react-app is a command-line tool that scaffolds a React application. Using this, there is no need to install or configure module bundlers like Webpack, or transpilers like Babel. These come preconfigured (and hidden) with create-react-app, so you can jump right into building your app!
 
-- React encourages us to build applications using composition instead of inheritance.
-- Yes, we extend React.Component, but we never extend it more than once. Instead of extending base components to add more UI or behavior, we compose elements in different ways using nesting and props. You ultimately want your UI components to be independent, focused, and reusable.
+- React encourages us to build applications using _composition instead of inheritance_.
+- we need to extend React.Component, but we never extend it more than once. Instead of extending base components to add more UI or behavior, we compose elements in different ways using nesting and props. You ultimately want your UI components to be independent, focused, and reusable.
 
 ```
 So if you’ve never understood what it means to “favor composition over inheritance” you’ll definitely learn using React!
@@ -66,9 +71,9 @@ this.state = {
 
 - In the above example, if props are ever updated, the current state will not change unless the component is "refreshed." Using props to produce a component's initial state also leads to duplication of data, deviating from a dependable "source of truth."
 - This process of determining what has changed in the previous and new outputs is called Reconciliation.
-- How State is Set
+- How to change the State?
   ```
-  Earlier in this lesson, we saw how we can define a component's state at the time of initialization. Since state reflects mutable information that ultimately affects rendered output, a component may also update its state throughout its lifecycle using this.setState(). As we've learned, when local state changes, React will trigger a re-render of the component.
+  we saw how we can define a component's state at the time of initialization. Since state reflects mutable information that ultimately affects rendered output, a component may also update its state throughout its lifecycle using this.setState(). As we've learned, when local state changes, React will trigger a re-render of the component.
   ```
 
 #### There are two ways to use setState().
@@ -111,12 +116,12 @@ While a component can set its state when it initializes, we expect that state to
 
 ## Your UI is just a function of your state
 
-for all components, its UI = f(state).
+for all components, its **UI = f(state)**.
 
-- Functions that are updating the state(let x) in some way must reside in state-x component, not in children or parent.
-- Type checking a Component's Props with PropTypes
-  As we implement additional features into our app, we may soon find ourselves debugging our components more frequently. For example, what if the props that we pass to our components end up being an unintended data type (e.g. an object instead of an array)? PropTypes is a package that lets us define the data type we want to see right from the get-go and warn us during development if the prop that's passed to the component doesn't match what is expected.
-  To use PropTypes in our app, we need to install prop-types:
+- Functions that are updating the state(let x) in some way must reside in x-state component, not in children or parent.
+- **Type checking a Component's Props with PropTypes**
+  - As we implement additional features into our app, we may soon find ourselves debugging our components more frequently. For example, what if the props that we pass to our components end up being an unintended data type (e.g. an object instead of an array)? PropTypes is a package that lets us define the data type we want to see right from the get-go and warn us during development if the prop that's passed to the component doesn't match what is expected.
+    To use PropTypes in our app, we need to install prop-types:
 
 ```
 $ npm install --save prop-types
@@ -138,48 +143,50 @@ $ yarn add prop-types
 - conditionally disable/enable buttons
 - enforce input formats
 
-![](./images/b.png)
+![](../images/b.png)
 
 - In our ListContacts component, not only does the component render a form, but it also controls what happens in that form based on user input. In this case, event handlers update the component's state with the user's search query. And as we've learned: any changes to React state will cause a re-render on the page, effectively displaying our live search results.
 - **Putting it All Into Perspective**
   When it comes to keeping track of data in your app, think about what will be done with that data, and what that data will look like as your user interfaces with your app. If you want your component to store mutable local data, consider using state to hold this information. Many times, it is state that will be used to manage controlled form elements in your components.
 - On the other hand, if some information isn't expected to change over time, and is generally designed to be "read-only" throughout your app, consider using props instead. Both state and props will generally be in the form of an object, and changes in either will trigger a re-render of the component, but they each play very different roles in your app.
-- We covered a lot in this lesson, and you've made great progress - great work!
 - render() is only used for displaying content, we put the code that should handle things like Ajax requests in what React calls lifecycle events.
-
-![](./images/c.png)
 
 ### Lifecycle Events
 
+![](../images/c.png)
+
 Lifecycle events are specially named methods in a component. These methods are automatically bound to the component instance, and React will call these methods naturally at certain times during the life of a component. There are a number of different lifecycle events, but here are the most commonly used ones.
 
-> > componentDidMount()
+> componentDidMount()
+>
 > > invoked immediately after the component is inserted into the DOM
 
-> > componentWillUnmount()
+> componentWillUnmount()
+>
 > > invoked immediately before a component is removed from the DOM
 
-> > getDerivedStateFromProps()
+> getDerivedStateFromProps()
+>
 > > invoked after a component is instantiated as well as when it receives brand new props
 
 - To use one of these, you'd just create a method in your component with the name and React will call it. It's an easy way to hook into different parts of the lifecycle of React components.
 
-- The lifecycle event that we'll be looking at (and will be using a lot in our app!) is the componentDidMount() lifecycle event.
+- The lifecycle event that we'll be looking at (and will be using a lot in our app!) is the **componentDidMount()** lifecycle event.
 
-- You'll sometimes see shouldComponentUpdate() in React apps as well. It returns true by default. This means that whenever a component's state (or its parent's state) is updated, the component re-renders.
+- You'll sometimes see **shouldComponentUpdate()** in React apps as well. It returns true by default. This means that whenever a component's state (or its parent's state) is updated, the component re-renders.
 
 - The React documentation provides the following guidance for using this lifecycle event:
 
-- The default behavior is to re-render on every state change, and in the vast majority of cases you should rely on the default behavior.
-- Do not rely on it to “prevent” a rendering, as this can lead to bugs.
-- Consider using the built-in PureComponent instead of writing shouldComponentUpdate() by hand.
-  We do not recommend doing deep equality checks or using JSON.stringify() in shouldComponentUpdate(). It is very inefficient and will harm performance.
+  - The default behavior is to re-render on every state change, and in the vast majority of cases you should rely on the default behavior.
+  - Do not rely on it to “prevent” a rendering, as this can lead to bugs.
+  - Consider using the built-in **PureComponent** instead of writing shouldComponentUpdate() by hand.
+    We do not recommend doing deep equality checks or using JSON.stringify() in shouldComponentUpdate(). It is very inefficient and will harm performance.
 
 ## Now, there are a number of different lifecycle events.
 
 They will run at different points, but we can break them down into three distinct categories:
 
-### Adding to the DOM
+### 1. Adding to the DOM
 
 The following lifecycle events will be called in order when a component is being added to the DOM:
 
@@ -193,7 +200,7 @@ componentDidMount();
 ⚠️componentWillMount() has been deprecated. ⚠️
 As of React 16.3, componentWillMount() has been replaced with UNSAFE_componentWillMount(). Only UNSAFE_componentWillMount() will work starting with React 17.0. UNSAFE_componentWillMount() is now considered to be a legacy method and should not be used in new code.
 
-### Re-rendering
+### 2. Re-rendering
 
 The following lifecycle events will be called in order when a component is re-rendered to the DOM:
 
@@ -209,7 +216,7 @@ componentDidUpdate()
 
 As of React 16.3, they have been replaced with UNSAFE_componentWillUpdate() and UNSAFE_componentWillReceiveProps(). Only UNSAFE_componentWillUpdate() and UNSAFE_componentWillReceiveProps() will work starting with React 17.0. UNSAFE_componentWillUpdate() and UNSAFE_componentWillReceiveProps() are now considered to be legacy methods and should not be used in new code.
 
-### Removing from the DOM
+### 3. Removing from the DOM
 
 This lifecycle event is called when a component is being removed from the DOM:
 
