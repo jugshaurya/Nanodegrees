@@ -2,12 +2,13 @@
 
 React native allows you to use react to build native ios and android application. Sounds too good to be true, well it isn't.
 
-- It is more beneficalial for startups
-- How ? Instead o a web team, ios tema, android team, with reactive native u can just have a single UI team, this saves money and developers hours as well.
+- It is more beneficial for startups
+- How ? Instead of a web team, ios tema, android team, with reactive native u can just have a single UI team, this saves money and developers hours as well.
 
 - React Native follows "Learn ones, write anywhere".
-- NOt write once run anywhere.
+- Not write once run anywhere.
 - It means react and redux principles are used to create react native applications things like component composition and declarative UI.
+- **Instead of sharing the same codebase , react native shares the same priniciples of react to build apps for web ,android, and ios.**
 
 ## React Native Under the Hood
 
@@ -34,7 +35,7 @@ Create React Native App Pros
 The obvious one is that Create React Native app minimizes the amount of time it takes to create a "hello world" application. The fact that you can run a command in your terminal and 15 seconds later have a project that run on both Android and iOS using JavaScript is pretty incredible. Next, and we'll look deeper into this one later on, Create React Native App allows you to easily develop on your own device. This way, any changes you make in your text editor will instantly show on the app running on your local phone. Next, and this is something I mentioned earlier, with Create React Native App you just need one build tool. You don't have to worry about Xcode or Android Studio. Lastly, there's no lock in. Just like Create React App, you can "eject" at anytime.
 
 Create React Native Cons
-Now, there are some cons, and granted they're pretty minor, but they're good to be aware of. First, if you're building an app that's going to be added to an existing native iOS or Android application, Create React Native App won't work. Second, if you need to build your own bridge between React Native and some native API that Create React Native App doesn't expose (which is pretty rare), Create React Native App won't work.
+**Now, there are some cons, and granted they're pretty minor, but they're good to be aware of. First, if you're building an app that's going to be added to an existing native iOS or Android application, Create React Native App won't work. Second, if you need to build your own bridge between React Native and some native API that Create React Native App doesn't expose (which is pretty rare), Create React Native App won't work.**
 
 Let's jump right in!
 
@@ -51,3 +52,159 @@ Let's jump right in!
 - Much like Create React App, Create React Native App allows us to quickly build and scaffold a starter application
 
 - Expo makes it easy to build mobile applications without having to write native code (e.g. Swift, Objective C, Java)
+
+## Start
+
+run npx expo start and Install expo globally by pressing `Y`.
+
+```
+  $ expo init projectname
+  $ choose blank template
+  $ expo start or npm start
+  $ scan the code and view on expo-app
+```
+
+## Debugger
+
+- To Debug
+- All you have to do is shake your phone, or press:
+
+  - ⌘D in the iOS simulator
+  - ⌘M in the Android simulator
+
+- To Refresh
+- To refresh the app, just:
+  - Double-tap “R” on your keyboard (if using the simulator)
+  - Shake the phone, then select “Refresh”
+
+## Web vs. Native
+
+Native applications look and "feel" different because they are fundamentally different. Even though we're using the same React principles that you've learned throughout this program, keep in mind that this is no longer the web! While some of these distinctions are more apparent (e.g., the development process, access to native features, how users get updates, etc.), there are some key differences that we'll be taking a deep dive into during this course.
+
+- For one, **native apps often leverage animations** to help create a great user experience. Animations such as button effects, screen transitions, and other visual feedback may be subtle, but they support continuity and guidance in the apps you build. They all function to dynamically tell a story about how your application works. Without animations, an application can feel like just a collection of static screens.
+
+- Another key difference between native and web applications is in **navigation**. Recall that React Router's Route component allows us to map a URL to a specific UI component. In React Native, routers function as a stack; that is, individual screens are "pushed" and "popped" as needed
+
+## Android vs. iOS
+
+- Perhaps the most apparent are the distinct **design** philosophies on each platform: Android apps utilize Google's Material Design, while iOS apps take advantage of Apple's Human Interface Design. When designing mobile applications, it's important to your users that an iOS app feels like an iOS app, and an Android app feels like an Android app.
+
+- Navigation between screens feels distinct between Android and iOS as well. **Android devices** have access to a **navigation bar at the bottom of the screen**, which allows users to go back to the previous screen (among other features). **On iOS**, the approach is different: **there is no such universal navigation bar!** When building the UI for an iOS application, it is important to **include a back button in ios applications** (perhaps on a custom navigation bar) to help guide users through your app.
+
+- One more key difference between Android and iOS involves **tab navigation.** iOS apps include tab bars at the bottom of the app's screen, allowing for convenient access to different portions of the app. Likewise, Android apps include them as well; however tabs are distinctly located at the top of the screen. Both allow access to high-level content.
+
+### Common React Native Components `View, Text`
+
+- When writing HTML, we're used to using `<div>` and `<span>` tags to define sections or to contain other elements on the page. In React Native, a similar principle applies, but this time we're using React Native's `<View>` component to build the application UI. Just like HTML's `<div>,` `<View>` components can accommodate several props (e.g. style), and can even be nested inside other `<View>` components!
+
+- `<Text>` works just how you'd expect, as well. Its main objective is to, by no surprise, render text in the application. Just like `<View>,` styling and nesting capabilities apply to `<Text>` components, as well.
+
+## Choose Icon
+
+- Github: https://github.com/oblador/react-native-vector-icons
+- Choose: https://icons.expo.fyi/
+
+```JS
+// eX-
+// - ios-pizza
+// 1. Import the icon family
+  import { Ionicons } from '@expo/vector-icons';
+// 2. Render the component
+<Ionicons name="ios-pizza" size={24} color="black" />
+```
+
+### Touchables
+
+- `Button`
+
+```js
+<Button title={"I am a Button"} onPress={() => alert("Hello")} />
+```
+
+- `TouchableHighlight`
+
+```js
+// - use this if wanna change color of btn when active
+
+<TouchableHighlight
+  style={{
+    backgroundColor: "red",
+    padding: 10,
+    margin: 10,
+    marginEnd: 50,
+    marginLeft: 50,
+  }}
+  color={"red"}
+  onPress={() => alert("Hdfello")}
+  underlayColor="blue"
+>
+  <Text>Hello</Text>
+</TouchableHighlight>
+```
+
+- `TouchableOpacity`
+
+```js
+// - use this if wanna fade the btn when active
+<TouchableOpacity
+  style={{
+    backgroundColor: "red",
+    padding: 10,
+    margin: 10,
+    marginEnd: 50,
+    marginLeft: 50,
+  }}
+  color={"red"}
+  onPress={() => alert("Hdfello")}
+>
+  <Text>Hello</Text>
+</TouchableOpacity>
+```
+
+- `TouchableNativeFeedback`
+- `TouchableWithoutFeedback`
+
+```js
+// both are almost same and dont work with Text inside so have to use View
+// both are rarely used
+
+<TouchableNativeFeedback onPress={() => alert("Hdfello with Fes")}>
+  <View
+    style={{
+      backgroundColor: "red",
+      padding: 10,
+      margin: 10,
+      marginEnd: 50,
+      marginLeft: 50,
+    }}
+  >
+    <Text>Hello</Text>
+  </View>
+</TouchableNativeFeedback>
+```
+
+## Lists
+
+- `ScrollView`
+- `FlatList`
+- `SectionList`
+
+## Forms
+
+- `TextInput`
+- `KeyboardAvoidingView`
+- `Slider`
+- `Switch`
+
+## Images
+
+`Image`
+
+- from within the project
+  ![](../images/y.png)
+- from external Source
+  ![](../images/z.png)
+
+#### LocalStorage is Known as AsyncStorage
+
+AsyncStorage is analogous to localstorage in mobile apps.
